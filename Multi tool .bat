@@ -6,7 +6,7 @@ goto main
 :main 
 echo.
 
-
+color 0c
 echo      __  ___      ____  _    ______            __       __                 __________  ____  _____   _______   __
 echo     /  //  /_  __/ / /_(_)  /_  __/___  ____  / /      / /_  __  __       / ____/ __ \/ __ \/__  /  / ____/ / / /
 echo    / //_/ / / / / / __/ /    / / / __ \/ __ \/ /      / __ \/ / / /      / /_  / /_/ / / / /  / /  / __/ /  \/ / 
@@ -18,7 +18,7 @@ echo and some paste of Ebola man
 echo .
 echo .
 echo [1] = Ip / Website Pinger 
-echo [2] = Remote Desktop Connection 
+echo [2] = Remote Desktop Connection ( dont work for the moment, so connect yourself =
 echo [3] = IP Lookup 
 echo [4] = Session Password Bruteforce 
 
@@ -60,13 +60,13 @@ cls
 chcp 65001 >nul
 echo    Computer  
 set /p domain=">> "
-echo.
+cls
 echo     Username
 set /p user=">> "
-echo.
+cls
 echo    Password  
 set /p pass=">> "
-echo.
+cls
 echo %info% Connecting to %domain%...
 rem Disconnects any running connections
 net use \\%domain% /user:%user% %pass% >nul 2>&1
@@ -75,12 +75,12 @@ net use \\%domain% /user:%user% %pass% >nul 2>&1
 
 if /I "%errorlevel%" NEQ "0" (
   echo %warning% Invalid Credentials or Network Issue
-  pause
-  goto start
+pause 
+goto main 
 )
 
 echo %success% Connected!
-
+timeout 8
 goto main 
 
 :winrm
@@ -177,9 +177,9 @@ goto start
 
 title Session Bruteforce - Made by Ebola man / Improve by FROZEN
 cls
+echo ATTENTION ! IF U USE THIS PROGRAM ON YOUR OWN COMPUTER, IT MAY BLOCK IT AND DONT WORK SOME MINUTES, BE CAREFUL
 
-
-set /p ip="IP Address: "
+set /p ip="Desktop Name: "
 set /p user="Username: "
 set /p wordlist="Password List ( need to be in the same folder ) : "
 
