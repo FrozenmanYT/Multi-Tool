@@ -21,7 +21,7 @@ echo [1] = Ip / Website Pinger
 echo [2] = Remote Desktop Connection ( dont work for the moment, so connect yourself =
 echo [3] = IP Lookup 
 echo [4] = Session Password Bruteforce 
-
+echo [5] = Custom CMD 
 
 set choiceinput=
 set /p choiceinput= Choose : 
@@ -30,6 +30,7 @@ if %choiceinput%==1 goto pinger
 if %choiceinput%==2 goto RDC
 if %choiceinput%==3 goto iplook
 if %choiceinput%==4 goto bruteforce
+if %choiceinput%==5 goto customcmd
 
 :pinger
 cls
@@ -204,3 +205,57 @@ net use \\%ip% /user:%user% %pass% >nul 2>&1
 echo [ATTEMPT %count%] [%pass%]
 set /a count=%count%+1
 if %errorlevel% EQU 0 goto success
+
+
+:customcmd
+cls
+
+chcp 65001 >nul
+
+title Custom Cmd
+
+for /f %%A in ('"prompt $H &echo on &for %%B in (1) do rem"') do set BS=%%A
+
+goto question
+
+:question
+
+
+echo     			    	 	   ___           ___ 
+echo     			   		  / __\ /\/\    /   \
+echo   			       		 / /   /    \  / /\ /
+echo    			   		/ /___/ /\/\ \/ /_// 
+echo     			   		\____/\/    \/___,'  
+
+echo                      			     by frozen
+echo.
+echo.
+echo.
+echo.
+
+
+set /p delay= delay ? ( yes / no )
+goto main1
+
+
+
+:main1
+
+if %delay%== no goto response 
+
+color 9
+whoami 
+set /p cmd=".%BS% [97m╚══>[0m "
+
+goto search
+
+:response
+color 9
+set /p cmd=".%BS% [97m╚══>[0m "
+%cmd%
+goto main1
+
+:search
+echo Searching...
+timeout 2
+goto response
